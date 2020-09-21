@@ -55,5 +55,5 @@ def scrapping(link, k):
 
 for j in range(len(urls)):
     name = urls[j]
-    print("\n\nParsing through", name[26: -17])
+    print("\n\nParsing through", name[26: -17], "category")
     scrapping(urls[j], j)
