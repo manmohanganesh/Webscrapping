@@ -30,24 +30,30 @@ def write(path, filename, data):
         json.dump(data, fp)
 
 
-def scrapping(link):
+def retrieve(page_soups, link_name, count):
+    if count < 3:
+        title = page_soups.find_all("span", {'class': 'a-size-medium a-color-base a-text-normal'})
+    else:
+        title = page_soups.find_all("span", {'class': 'a-size-base-plus a-color-base a-text-normal'})
+    price = page_soups.find_all("span", {'class': 'a-price-whole'})
+    try:
+        if len(title) < len(price):
+            dat = {title[i].text: price[i].text for i in range(len(title))}
+        else:
+            dat = {title[i].text: price[i].text for i in range(len(price))}
+        write('./', link_name[26:-17], dat)
+    except:
+        print('Parsing error')
+
+
+def scrapping(link, k):
     driver = webdriver.Chrome("/usr/bin/chromedriver")
     driver.get(link)
     page_soup = BeautifulSoup(driver.page_source, 'html.parser')
-    try:
-        title = page_soup.find_all("span", {'class': 'a-size-medium a-color-base a-text-normal'})
-        price = page_soup.find_all("span", {'class': 'a-price-whole'})
-        dat = {title[i].text: price[i].text for i in range(len(title))}
-        # write('./', 'scrapdata', dat) #If you want all product data in a single file
-        write('./', link[26:-17], dat)
-
-    except:
-        print('Parsing error')
+    retrieve(page_soup, link,k)
 
 
 for j in range(len(urls)):
     name = urls[j]
     print("\n\nParsing through", name[26: -17])
-    scrapping(urls[j])
-
-
+    scrapping(urls[j], j)

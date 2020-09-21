@@ -14,9 +14,10 @@ headers = {
     'sec-fetch-dest': 'document',
     'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
 }
-urls = ['https://www.amazon.in/s?k=mobile&rh=n%3A1389401031&dc&ref=a9_sc_1',
-        'https://www.amazon.in/s?k=laptops&ref=nb_sb_noss_2',
-        'https://www.amazon.in/s?k=headphones&ref=nb_sb_noss_2']
+urls = ['https://www.amazon.in/s?k=shirt&ref=nb_sb_noss_2',
+        'https://www.amazon.in/s?k=pant&ref=nb_sb_noss_2',
+        'https://www.amazon.in/s?k=kurti&ref=nb_sb_noss_2',
+        'https://www.amazon.in/s?k=bat&ref=nb_sb_noss_2']
 
 def scrapping(link):
     driver = webdriver.Chrome("/usr/bin/chromedriver")
@@ -24,7 +25,7 @@ def scrapping(link):
 
     page_soup = BeautifulSoup(driver.page_source, 'html.parser')
 
-    title = page_soup.find_all("span", {'class': 'a-size-medium a-color-base a-text-normal'})
+    title = page_soup.find_all("span", {'class': 'a-size-base-plus a-color-base'})
     price = page_soup.find_all("span", {'class': 'a-price-whole'})
 
     count = len(title)
